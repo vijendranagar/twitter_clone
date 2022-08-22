@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const path = require("path");
 
@@ -44,6 +45,7 @@ const chatRoutes = require("./routes/chatRoute");
 
 const postApiRoute = require("./routes/api/posts");
 const { accessSync } = require("fs");
+const { prototype } = require("stream");
 
 app.use(
   session({
@@ -96,7 +98,7 @@ io.on("connection", (socket) => {
     await Chat.create({ content: data.msg, user: data.user });
   });
 });
-
-server.listen(3000, () => {
-  console.log("Server running at port 3000");
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`server running at port ${port}`);
 });
